@@ -21,14 +21,14 @@ using namespace std;
 /*==================================================================================================
 *                                       LOCAL MACROS
 ==================================================================================================*/
-#define MSCN  12345678
+#define MSCN  "12345678"
 
 
 /*================================================================================================
                                         GLOBAL VARIABLE
 =================================================================================================*/
 
-int mscn;
+string mscn;
 int luachon = 0;
 int luachon_R_D;
 unsigned int tocdo;
@@ -43,6 +43,8 @@ void Welcome(void);
 void ChonHanhTrinh_P_N(void);
 void ChonHanhTrinh_R_D(void);
 void CanhBao(unsigned int tocdo);
+inline bool isNumber(std::string sValue);
+
 
 
 
@@ -66,19 +68,28 @@ void login(void)
     {
         cout << "NHAP MA SO CA NHAN: ";
         cin >> mscn;
-        // Kiem tra ma so ca nhan nhap vao co dung hay khong, 
-        // Neu dung sang man hinh MH-2
-        if (mscn == MSCN)
+        if (isNumber(mscn))
         {
-            Welcome();
-        }
+            // Kiem tra ma so ca nhan nhap vao co dung hay khong, 
+            // Neu dung sang man hinh MH-2
+            if (mscn == MSCN)
+            {
+                Welcome();
+            }
     
-        // Sai yeu cau nhap lai
+            // Sai yeu cau nhap lai
+            else
+            {
+                cout << "Nhap lai cho den khi nhap dung ma so ca nhan" << endl;
+
+            }
+        }
         else
         {
-            cout << "Nhap lai cho den khi nhap dung ma so ca nhan" << endl;
-
+            cout << "Can nhap vao ky tu tu 0 -> 9" << endl;
         }
+        
+        
     } while (mscn != MSCN);
     
   
@@ -103,8 +114,9 @@ void ShowMenu(void)
 		cout << " 3. N " << endl;               // Chuyen so sang so N, tam dung xe
 		cout << " 4. D " << endl;               // Chuyen so sang so D, tien xe
 		cout << " 5. POWER OFF " << endl;       // Tat may dung hoat dong
-
+        cout << ">>";
 		cin >> luachon;
+        
     }while(luachon < 1 || luachon > 5);
 
     switch (luachon) {
@@ -113,10 +125,8 @@ void ShowMenu(void)
 		break;
 	case 2:
 		ChonHanhTrinh_R_D();
-        
 		break;
 	case 3:
-
         ChonHanhTrinh_P_N();
 		break;
 	case 4:
@@ -138,13 +148,12 @@ void ChonHanhTrinh_P_N(void)
     if (tocdo == 0)
     {
         cout << "DA VE SO P " << endl;
-        cout << "CHU Y SU DUNG PHANH TAY DE DAM BAO AN TOAN " << endl;
+        cout << "CHU Y SU DUNG PHANH TAY DE DAM BAO AN TOAN\n " << endl;
         ShowMenu();
-
     }
     else
     {
-        cout << "HAY CHAC CHAN DA DUNG VA VAN TOC LA 0 KM/H " << endl;
+        cout << "HAY CHAC CHAN DA DUNG VA VAN TOC LA 0 KM/H\n " << endl;
         ShowMenu();
     } 
     system("pause");
@@ -176,7 +185,7 @@ void ShowMenu_R_D(void)
 
     switch (luachon_R_D) {
 	case 1:
-        
+        system("cls");
         tocdo = tocdo + 5;
         cout << "-------- TOC DO HIEN TAI: " << tocdo << " km/h" << endl;
         CanhBao(tocdo);
@@ -184,16 +193,19 @@ void ShowMenu_R_D(void)
         ShowMenu_R_D();
 		break;
 	case 2:
-		tocdo = tocdo - 5;
+        system("cls");
+        tocdo = tocdo - 5;
         cout << "-------- TOC DO HIEN TAI: " << tocdo << " km/h" << endl;
         ShowMenu_R_D();
-		break;
+        break;
 	case 3:
+        system("cls");
         cout << "DUNG XE " << endl;
         tocdo = 0;
-		break;
-	case 4:
-		ShowMenu();
+	    break;
+    case 4:
+        system("cls");
+        ShowMenu();
         break;
     default:
         break;
@@ -223,3 +235,19 @@ void CanhBao(unsigned int tocdo)
             /* code */
         }
 }
+
+/*Desciption: To check whether the string inputs is numberic or not
+Result: Return True if it is, otherwise return False
+*/
+inline bool isNumber(std::string sValue)
+{
+	for (auto& var : sValue)
+	{
+		if (var < '0' || var > '9')
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
